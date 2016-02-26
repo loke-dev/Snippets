@@ -2,8 +2,8 @@
 
 const express = require("express");
 const exphbs = require("express-handlebars");
-const app = express();
 const mongoose = require("./config/mongoose.js");
+const app = express();
 
 //Start the server
 mongoose();
@@ -17,7 +17,6 @@ app.set("view engine", "hbs");
 
 app.get("/", function(req, res) {
     res.render("home/index");
-    console.log("HEMMMA!!");
 });
 
 
@@ -34,6 +33,6 @@ app.get("*", function(req, res){
     res.render("error/404");
 });
 
-app.listen(3015, function() {
-    console.log("Example app listening on port 3015!");
+app.listen(8000, function() {
+    console.log("Example app listening on port 8000!");
 });
