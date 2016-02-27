@@ -1,10 +1,10 @@
 "use strict";
 
-const mongoose = require("mongoose");
-const CONNECTION_STRING = "mongodb://localhost/mylittledb";
+const mongoose  = require("mongoose");
+const URL       = "mongodb://localhost/mylittledb";
 
 module.exports =  function() {
-    let db = mongoose.connect(CONNECTION_STRING);
+    let db = mongoose.connect(URL);
 
     db.connection.on("connected", function() {
         console.log("Mongoose connection open.");

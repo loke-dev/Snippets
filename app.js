@@ -1,9 +1,9 @@
 "use strict";
 
-const express = require("express");
-const exphbs = require("express-handlebars");
-const mongoose = require("./config/mongoose.js");
-const app = express();
+const express   = require("express");
+const exphbs    = require("express-handlebars");
+const mongoose  = require("./config/mongoose.js");
+const app       = express();
 
 //Start the server
 mongoose();
@@ -17,6 +17,33 @@ app.set("view engine", "hbs");
 
 app.get("/", function(req, res) {
     res.render("home/index");
+});
+
+app.get("/login", function(req, res) {
+  res.render("login");
+});
+
+app.get("/signup", function(req,res){
+  res.render("functions/signup");
+});
+
+//app.use("/signup", require("./routes/signup.js"));
+
+
+app.post("/signup", function(req, res){
+  var username = req.body.username;
+  var password = req.body.password;
+  var passwordConfirm = req.body.passwordConfirm;
+
+  createUser(username, password, passwordConfirm, function(err, user){
+    if (err) {
+      res.render("functions/signup", {error: err});
+    } else {
+      req.session.username = user.username;
+      console.log("You registered!");
+      res.redirect("/");
+    }
+  });
 });
 
 
