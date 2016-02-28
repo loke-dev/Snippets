@@ -1,9 +1,12 @@
 "use strict";
 
-const express   = require("express");
-const exphbs    = require("express-handlebars");
-const mongoose  = require("./config/mongoose.js");
-const app       = express();
+const express    = require("express");
+const exphbs     = require("express-handlebars");
+const bodyParser = require("body-parser");
+const path       = require("path");
+const mongoose   = require("./config/mongoose.js");
+const signup     = require("./js/signup.js");
+const app        = express();
 
 //Start the server
 mongoose();
@@ -14,6 +17,11 @@ app.engine("hbs", exphbs({
 }));
 
 app.set("view engine", "hbs");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+
 
 app.get("/", function(req, res) {
     res.render("home/index");
@@ -31,11 +39,11 @@ app.get("/signup", function(req,res){
 
 
 app.post("/signup", function(req, res){
-  var username = req.body.username;
-  var password = req.body.password;
-  var passwordConfirm = req.body.passwordConfirm;
+  let username = req.body.username;
+  let password = req.body.password;
+  let passwordConfirm = req.body.passwordConfirm;
 
-  createUser(username, password, passwordConfirm, function(err, user){
+  signup.createUser(username, password, passwordConfirm, function(err, user){
     if (err) {
       res.render("functions/signup", {error: err});
     } else {
