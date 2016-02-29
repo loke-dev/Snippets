@@ -1,12 +1,4 @@
 <H1>HOME!</H1>
-
-<form action="/login" method="post">
-Username: <input type="text" name="username"><br>
-Password: <input type="password" name="password"><br>
-<button type="submit">Sign in</button>
-</form>
-
-
-{{#each users}}
-  <li><b>{{this.username}}</b></li>
-{{/each}}
+{{#if user}}
+<H2>Welcome {{user.username}}</H2>
+{{/if}}

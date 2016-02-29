@@ -1,7 +1,7 @@
 "use strict";
 
 const mongoose  = require("mongoose");
-const dbUrl       = "mongodb://localhost/mylittledb";
+const dbUrl     = "mongodb://localhost/mylittledb";
 
 module.exports =  function() {
     let db = mongoose.connect(dbUrl);
