@@ -71,7 +71,7 @@ app.get("/snippets/new", login.requireUser, function(req, res){
 });
 
 app.post("/login", function(req, res){
-    let username = req.body.username;
+    let username = req.body.username.toLowerCase();
     let password = req.body.password;
 
   login.checkUser(username, password, function(err, user){
@@ -87,7 +87,7 @@ app.post("/login", function(req, res){
 });
 
 app.post("/signup", function(req, res){
-    let username        = req.body.username;
+    let username        = req.body.username.toLowerCase();
     let password        = req.body.password;
     let passwordConfirm = req.body.passwordConfirm;
 
