@@ -1,11 +1,15 @@
 "use strict";
 
 const usersDb = require("../models/users");
+const bcrypt  = require("bcrypt-nodejs");
 
 let checkUser = function(username, password, callback){
-  usersDb.findOne({username: username, password:password}, function(err, user){
-    callback(err, user);
-  });
+    usersDb.findOne({username: username}, function(err, user){
+        bcrypt.compare(password, user.password, function(err, res) {
+            console.log(user);
+            callback(err, user);
+        });
+    });
 };
 
 
