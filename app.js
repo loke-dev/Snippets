@@ -7,8 +7,8 @@ const bodyParser = require("body-parser");
 const path       = require("path");
 const mongoose   = require("./config/mongoose.js");
 const signup     = require("./js/signup.js");
+const snippet     = require("./js/snippet.js");
 const login      = require("./js/login.js");
-const usersDb    = require("./models/users");
 const app        = express();
 
 //Start the server
@@ -56,6 +56,10 @@ app.get("/signup", function(req,res){
     res.render("functions/signup");
 });
 
+app.get("/snippets", function(req,res){
+    res.render("functions/snippets");
+});
+
 app.post("/login", function(req, res){
     let username = req.body.username;
     let password = req.body.password;
@@ -79,7 +83,7 @@ app.post("/signup", function(req, res){
 
     signup.createUser(username, password, passwordConfirm, function(err, user){
         if (err) {
-            res.render("functions/signup", {error: err});
+            res.render("functions/signup", {flash: err});
         } else {
             console.log("You registered with the username: " + user.username + "!");
             req.session.flash = ("You have successfully created the account: " + user.username + ", you can now log in!");
@@ -88,6 +92,19 @@ app.post("/signup", function(req, res){
     });
 });
 
+app.post("/snippets/save", function(req, res){
+    let data = req.body.data;
+
+    snippet.save(data, function(err, user){
+        if (err) {
+            res.render("functions/signup", {flash: err});
+        } else {
+            console.log("You registered with the username: " + user.username + "!");
+            req.session.flash = ("You have successfully created the account: " + user.username + ", you can now log in!");
+            res.redirect("/");
+        }
+    });
+});
 
 
 /**
