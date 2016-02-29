@@ -25,8 +25,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
-    name:   "TEEEEEST",
-    secret: "OMGTHISISSOSECRET",
+    name:   "MySweetLittleCookie",
+    secret: "F303B3CD83F576E56A187D3F174BAED9",
     saveUninitialized: false,
     resave: false
 }));
@@ -41,14 +41,6 @@ app.use(function(req, res, next) {
 
 app.get("/", function(req, res) {
     res.render("home/index");
-});
-
-
-app.get("/", function(req, res){
-    usersDb.find().toArray(function(err, users){
-    console.log(users);
-    res.render("home/index", {users:users.users});
-  });
 });
 
 app.get("/logout", function(req, res){
