@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const path       = require("path");
 const mongoose   = require("./config/mongoose.js");
 const signup     = require("./js/signup.js");
+const usersDb      = require("./models/users");
 const app        = express();
 
 //Start the server
@@ -27,6 +28,15 @@ app.get("/", function(req, res) {
     res.render("home/index");
 });
 
+
+app.get("/", function(req, res){
+  usersDb.find().toArray(function(err, users){
+    console.log(users);
+    res.render("home/index", {users:users});
+  });
+});
+
+
 app.get("/login", function(req, res) {
   res.render("login");
 });
@@ -47,8 +57,7 @@ app.post("/signup", function(req, res){
     if (err) {
       res.render("functions/signup", {error: err});
     } else {
-      req.session.username = user.username;
-      console.log("You registered!");
+      console.log("You registered with the username: " + user.username + "!");
       res.redirect("/");
     }
   });

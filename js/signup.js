@@ -1,6 +1,5 @@
 "use strict";
 
-const mongo      = require("../config/mongoose.js");
 const users = require("../models/users");
 
 let createUser = function(username, password, passwordConfirm, callback){
@@ -9,10 +8,10 @@ let createUser = function(username, password, passwordConfirm, callback){
     let err = "The passwords do not match!";
     callback(err);
   } else {
-    let query      = {username:username};
+    let findUser      = {username:username};
     let userObject = {username: username, password: password};
 
-    users.findOne(query, function(err, user){
+    users.findOne(findUser, function(err, user){
       if (user) {
         err = "The username you entered already exists in the database!";
         callback(err);
