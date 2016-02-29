@@ -2,7 +2,7 @@
 
 const express    = require("express");
 const exphbs     = require("express-handlebars");
-const session     = require("express-session");
+const session    = require("express-session");
 const bodyParser = require("body-parser");
 const path       = require("path");
 const mongoose   = require("./config/mongoose.js");
@@ -33,6 +33,11 @@ app.use(session({
 
 app.use(login.checkLogin);
 
+app.use(function(req, res, next) {
+    res.locals.flash = req.session.flash;
+    delete req.session.flash;
+    next();
+});
 
 app.get("/", function(req, res) {
     res.render("home/index");
@@ -40,53 +45,55 @@ app.get("/", function(req, res) {
 
 
 app.get("/", function(req, res){
-  usersDb.find().toArray(function(err, users){
+    usersDb.find().toArray(function(err, users){
     console.log(users);
     res.render("home/index", {users:users.users});
   });
 });
 
 app.get("/logout", function(req, res){
-  delete req.session.username;
-  res.redirect("/");
+    delete req.session.username;
+    res.redirect("/");
 });
 
 app.get("/login", function(req, res) {
-  res.render("functions/login");
+    res.render("functions/login");
 });
 
 app.get("/signup", function(req,res){
-  res.render("functions/signup");
+    res.render("functions/signup");
 });
 
 app.post("/login", function(req, res){
-  let username = req.body.username;
-  let password = req.body.password;
+    let username = req.body.username;
+    let password = req.body.password;
 
   login.checkUser(username, password, function(err, user){
     if (user) {
         console.log("You logged in with the username: " + user.username);
         req.session.username = user.username;
+        req.session.flash = ("Welcome " + user.username);
         res.redirect("/");
     } else {
-        res.render("functions/login", {error: true});
+        res.render("functions/login", {flash: "The login information you entered is not correct!"});
     }
   });
 });
 
 app.post("/signup", function(req, res){
-  let username        = req.body.username;
-  let password        = req.body.password;
-  let passwordConfirm = req.body.passwordConfirm;
+    let username        = req.body.username;
+    let password        = req.body.password;
+    let passwordConfirm = req.body.passwordConfirm;
 
-  signup.createUser(username, password, passwordConfirm, function(err, user){
-    if (err) {
-      res.render("functions/signup", {error: err});
-    } else {
-      console.log("You registered with the username: " + user.username + "!");
-      res.redirect("/");
-    }
-  });
+    signup.createUser(username, password, passwordConfirm, function(err, user){
+        if (err) {
+            res.render("functions/signup", {error: err});
+        } else {
+            console.log("You registered with the username: " + user.username + "!");
+            req.session.flash = ("You have successfully created the account: " + user.username + ", you can now log in!");
+            res.redirect("/");
+        }
+    });
 });
 
 
