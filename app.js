@@ -7,8 +7,10 @@ const bodyParser = require("body-parser");
 const path       = require("path");
 const mongoose   = require("./config/mongoose.js");
 const signup     = require("./js/signup.js");
-const snippet     = require("./js/snippet.js");
+const snippetDb  = require("./models/snippets");
+const snippet    = require("./js/snippet.js");
 const login      = require("./js/login.js");
+const admin      = require("sriracha-admin");
 const app        = express();
 
 //Start the server
@@ -31,6 +33,8 @@ app.use(session({
     resave: false
 }));
 
+app.use("/admin", admin());
+
 app.use(login.checkLogin);
 
 app.use(function(req, res, next) {
@@ -52,12 +56,18 @@ app.get("/login", function(req, res) {
     res.render("functions/login");
 });
 
-app.get("/signup", function(req,res){
+app.get("/signup", function(req, res){
     res.render("functions/signup");
 });
 
-app.get("/snippets", function(req,res){
-    res.render("functions/snippets");
+app.get("/snippets", function(req, res) {
+    snippetDb.find({}).then(function(snippets) {
+        res.render("functions/snippets", {snippets: snippets});
+    });
+});
+
+app.get("/snippets/new", login.requireUser, function(req, res){
+    res.render("functions/newSnippet");
 });
 
 app.post("/login", function(req, res){
@@ -94,14 +104,15 @@ app.post("/signup", function(req, res){
 
 app.post("/snippets/save", function(req, res){
     let data = req.body.data;
+    let title = req.body.title;
 
-    snippet.save(data, function(err, user){
+    snippet.save(data, title, function(err){
         if (err) {
-            res.render("functions/signup", {flash: err});
+            res.render("functions/snippets", {flash: err});
         } else {
-            console.log("You registered with the username: " + user.username + "!");
-            req.session.flash = ("You have successfully created the account: " + user.username + ", you can now log in!");
-            res.redirect("/");
+            console.log("Your snippet was successfully saved!");
+            req.session.flash = ("Your snippet was successfully saved!");
+            res.redirect("/snippets");
         }
     });
 });

@@ -12,7 +12,8 @@
     "nodemon": "^1.8.1",
     "path": "^0.12.7",
     "request": "^2.69.0",
-    "request-promise": "^2.0.0"
+    "request-promise": "^2.0.0",
+    "sriracha-admin": "0.0.3"
   },
   "devDependencies": {},
   "scripts": {

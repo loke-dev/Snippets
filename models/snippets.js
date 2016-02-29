@@ -10,6 +10,9 @@ let snippetSchema = new mongoose.Schema({
     },
     data: {
         type: String
+    },
+    title: {
+        type: String
     }
 });
 

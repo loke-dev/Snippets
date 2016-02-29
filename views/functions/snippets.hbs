@@ -1,4 +1,28 @@
-<H1>HEJ och vellkomen till snippetzzz</H1>
-
+<H1>HEJ och vellkomen till snippetzzz {{user.username}}</H1>
 
 <a href="/snippets/new">Create new snippet</a>
+
+
+
+
+{{#if user}}
+<ul>
+{{#each snippets}}
+  <li>
+  <b>{{this.title}}</b>
+  <p>{{this.data}}</p>
+  <a href="/snippets/update/{{this._id}}">Update</a>
+  <a href="/snippets/delete/{{this._id}}">Delete</a>
+  </li><br>
+{{/each}}
+</ul>
+{{else}}
+<ul>
+{{#each snippets}}
+  <li>
+  <b>{{this.title}}</b>
+  <p>{{this.data}}</p>
+  </li><br>
+{{/each}}
+</ul>
+{{/if}}
