@@ -12,6 +12,18 @@ let save = function(data, title, callback){
     });
 };
 
+let del = function(id, callback){
+    snippetDb.findByIdAndRemove(id, function (err, doc){
+       if (err) {
+           callback(err, null);
+       } else {
+           callback(err, doc);
+       }
+    });
+};
+
+
 module.exports = {
-    save: save
+    save: save,
+    del: del
 };

@@ -5,10 +5,13 @@ const bcrypt  = require("bcrypt-nodejs");
 
 let checkUser = function(username, password, callback){
     usersDb.findOne({username: username}, function(err, user){
-        bcrypt.compare(password, user.password, function(err, res) {
-            console.log(user);
-            callback(err, user);
-        });
+        if (user) {
+            bcrypt.compare(password, user.password, function(err, res) {
+                callback(err, user);
+            });
+        } else {
+            callback(err);
+        }
     });
 };
 

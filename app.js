@@ -70,6 +70,25 @@ app.get("/snippets/new", login.requireUser, function(req, res){
     res.render("functions/newSnippet");
 });
 
+app.get("/snippets/update/:id", login.requireUser, function(req, res){
+    let id = req.params.id;
+    res.render("functions/upddddate" {id});
+});
+
+app.get("/snippets/delete/:id", login.requireUser, function(req, res){
+    let id = req.params.id;
+    snippet.del(id, function(err, doc){
+        if (err) {
+            req.session.flash = (err);
+            res.redirect("/snippets");
+        } else {
+            req.session.flash = ("Snippet sucessfully deleted from the database!");
+            res.redirect("/snippets");
+        }
+    });
+
+});
+
 app.post("/login", function(req, res){
     let username = req.body.username.toLowerCase();
     let password = req.body.password;
