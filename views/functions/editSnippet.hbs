@@ -1,6 +1,7 @@
 <form action="/snippets/edit/{{this.id}}" method="post">
 Title:<input type="text" name="title" value="{{this.title}}"><br>
 Data:<input type="text" name="data" value="{{this.data}}"><br>
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
 <button type="submit">Save</button>
 </form>
 

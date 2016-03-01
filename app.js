@@ -5,7 +5,7 @@ const exphbs       = require("express-handlebars");
 const session      = require("express-session");
 const bodyParser   = require("body-parser");
 const path         = require("path");
-const csurf        = require("csurf")
+const csrf        = require("csurf")
 const cookieParser = require("cookie-parser")
 const mongoose     = require("./config/mongoose.js");
 const signup       = require("./js/signup.js");
@@ -37,6 +37,10 @@ app.use(session({
 
 app.use("/admin", admin());
 
+var csrfProtection = csrf({ cookie: true })
+
+app.use(cookieParser())
+
 app.use(login.checkLogin);
 
 app.use(function(req, res, next) {
@@ -54,12 +58,12 @@ app.get("/logout", function(req, res){
     res.redirect("/");
 });
 
-app.get("/login", function(req, res) {
-    res.render("functions/login");
+app.get("/login", csrfProtection, function(req, res) {
+    res.render("functions/login", {csrfToken: req.csrfToken()});
 });
 
-app.get("/signup", function(req, res){
-    res.render("functions/signup");
+app.get("/signup", csrfProtection, function(req, res){
+    res.render("functions/signup", {csrfToken: req.csrfToken()});
 });
 
 app.get("/snippets", function(req, res) {
@@ -68,17 +72,17 @@ app.get("/snippets", function(req, res) {
     });
 });
 
-app.get("/snippets/new", login.requireUser, function(req, res){
-    res.render("functions/newSnippet");
+app.get("/snippets/new", csrfProtection, login.requireUser, function(req, res){
+    res.render("functions/newSnippet", {csrfToken: req.csrfToken()});
 });
 
-app.get("/snippets/edit/:id", login.requireUser, function(req, res){
+app.get("/snippets/edit/:id", csrfProtection, login.requireUser, function(req, res){
     let id = req.params.id;
     snippet.edit(id, function(err, id, title, data) {
         if (err) {
             console.log(err);
         } else {
-            res.render("functions/editSnippet", {id: id, title: title, data: data});
+            res.render("functions/editSnippet", {id: id, title: title, data: data, csrfToken: req.csrfToken()});
         }
     });
 });
@@ -97,7 +101,7 @@ app.get("/snippets/delete/:id", login.requireUser, function(req, res){
 
 });
 
-app.post("/login", function(req, res){
+app.post("/login", csrfProtection, function(req, res){
     let username = req.body.username.toLowerCase();
     let password = req.body.password;
 
@@ -113,7 +117,7 @@ app.post("/login", function(req, res){
   });
 });
 
-app.post("/signup", function(req, res){
+app.post("/signup", csrfProtection, function(req, res){
     let username        = req.body.username.toLowerCase();
     let password        = req.body.password;
     let passwordConfirm = req.body.passwordConfirm;
@@ -129,7 +133,7 @@ app.post("/signup", function(req, res){
     });
 });
 
-app.post("/snippets/save", function(req, res){
+app.post("/snippets/save", csrfProtection, function(req, res){
     let data  = req.body.data;
     let title = req.body.title;
 
@@ -144,7 +148,7 @@ app.post("/snippets/save", function(req, res){
     });
 });
 
-app.post("/snippets/edit/:id", function(req, res){
+app.post("/snippets/edit/:id", csrfProtection, function(req, res){
     let data  = req.body.data;
     let title = req.body.title;
     let id    = req.params.id;
