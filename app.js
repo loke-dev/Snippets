@@ -1,17 +1,19 @@
 "use strict";
 
-const express    = require("express");
-const exphbs     = require("express-handlebars");
-const session    = require("express-session");
-const bodyParser = require("body-parser");
-const path       = require("path");
-const mongoose   = require("./config/mongoose.js");
-const signup     = require("./js/signup.js");
-const snippetDb  = require("./models/snippets");
-const snippet    = require("./js/snippet.js");
-const login      = require("./js/login.js");
-const admin      = require("sriracha-admin");
-const app        = express();
+const express      = require("express");
+const exphbs       = require("express-handlebars");
+const session      = require("express-session");
+const bodyParser   = require("body-parser");
+const path         = require("path");
+const csurf        = require("csurf")
+const cookieParser = require("cookie-parser")
+const mongoose     = require("./config/mongoose.js");
+const signup       = require("./js/signup.js");
+const snippetDb    = require("./models/snippets");
+const snippet      = require("./js/snippet.js");
+const login        = require("./js/login.js");
+const admin        = require("sriracha-admin");
+const app          = express();
 
 //Start the server
 mongoose();
@@ -70,9 +72,15 @@ app.get("/snippets/new", login.requireUser, function(req, res){
     res.render("functions/newSnippet");
 });
 
-app.get("/snippets/update/:id", login.requireUser, function(req, res){
+app.get("/snippets/edit/:id", login.requireUser, function(req, res){
     let id = req.params.id;
-    res.render("functions/upddddate" {id});
+    snippet.edit(id, function(err, id, title, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("functions/editSnippet", {id: id, title: title, data: data});
+        }
+    });
 });
 
 app.get("/snippets/delete/:id", login.requireUser, function(req, res){
@@ -122,7 +130,7 @@ app.post("/signup", function(req, res){
 });
 
 app.post("/snippets/save", function(req, res){
-    let data = req.body.data;
+    let data  = req.body.data;
     let title = req.body.title;
 
     snippet.save(data, title, function(err){
@@ -135,6 +143,23 @@ app.post("/snippets/save", function(req, res){
         }
     });
 });
+
+app.post("/snippets/edit/:id", function(req, res){
+    let data  = req.body.data;
+    let title = req.body.title;
+    let id    = req.params.id;
+
+    snippet.update(id, title, data, function(err){
+        if (err) {
+            res.render("functions/snippets", {flash: err});
+        } else {
+            console.log("Your snippet was successfully updated!");
+            req.session.flash = ("Your snippet was successfully updated!");
+            res.redirect("/snippets");
+        }
+    });
+});
+
 
 
 /**

@@ -2,18 +2,18 @@
 
 const snippetDb  = require("../models/snippets");
 
-let save = function(data, title, callback){
+let save = function(data, title, callback) {
     let snippet = new snippetDb({
         data: data,
         title: title
     });
-    snippet.save(data, function(err){
+    snippet.save(data, function(err) {
         callback(err);
     });
 };
 
-let del = function(id, callback){
-    snippetDb.findByIdAndRemove(id, function (err, doc){
+let del = function(id, callback) {
+    snippetDb.findByIdAndRemove(id, function (err, doc) {
        if (err) {
            callback(err, null);
        } else {
@@ -22,8 +22,39 @@ let del = function(id, callback){
     });
 };
 
+let edit = function(id, callback) {
+    snippetDb.findById(id, function(err, doc) {
+        let id    = doc.id;
+        let title = doc.title;
+        let data  = doc.data;
+
+        if (err) {
+           callback(err, null, null, null);
+       } else {
+           callback(err, id, title, data);
+       }
+    });
+};
+
+let update = function(id, title, data, callback) {
+    let obj = {
+        data: data,
+        title: title
+    };
+    snippetDb.findByIdAndUpdate(id, obj, function(err, snippet) {
+        if (err) {
+           callback(err, null);
+       } else {
+           callback(err, snippet);
+       }
+    });
+};
+
+
 
 module.exports = {
     save: save,
-    del: del
+    del: del,
+    edit: edit,
+    update: update
 };

@@ -1,22 +1,21 @@
-<H1>HEJ och vellkomen till snippetzzz {{user.username}}</H1>
-
-<a href="/snippets/new">Create new snippet</a>
-
+<H1>Here you can create snippets {{user.username}}</H1>
 
 
 
 {{#if user}}
+<a href="/snippets/new">Create new snippet</a>
 <ul>
 {{#each snippets}}
   <li>
   <b>{{this.title}}</b>
   <p>{{this.data}}</p>
-  <a href="/snippets/update/{{this._id}}">Update</a>
+  <a href="/snippets/edit/{{this._id}}">Edit</a>
   <a href="/snippets/delete/{{this._id}}">Delete</a>
   </li><br>
 {{/each}}
 </ul>
 {{else}}
+<H2>Please log in to create, edit and delete snippets!</H2>
 <ul>
 {{#each snippets}}
   <li>
