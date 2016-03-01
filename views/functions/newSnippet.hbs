@@ -1,6 +1,6 @@
 <form action="/snippets/save" method="post">
-Title:<input type="text" name="title"><br>
-Data:<input type="text" name="data"><br>
+Title:<input type="text" name="title" required><br>
+Data:<input type="text" name="data" required><br>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 <button type="submit">Save</button>
 </form>

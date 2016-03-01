@@ -5,7 +5,7 @@ const exphbs       = require("express-handlebars");
 const session      = require("express-session");
 const bodyParser   = require("body-parser");
 const path         = require("path");
-const csrf        = require("csurf")
+const csrf         = require("csurf")
 const cookieParser = require("cookie-parser")
 const mongoose     = require("./config/mongoose.js");
 const signup       = require("./js/signup.js");
@@ -37,17 +37,19 @@ app.use(session({
 
 app.use("/admin", admin());
 
-var csrfProtection = csrf({ cookie: true })
+let csrfProtection = csrf({ cookie: true });
 
 app.use(cookieParser())
-
 app.use(login.checkLogin);
-
 app.use(function(req, res, next) {
     res.locals.flash = req.session.flash;
     delete req.session.flash;
     next();
 });
+
+/**
+ * GETS
+**/
 
 app.get("/", function(req, res) {
     res.render("home/index");
@@ -100,6 +102,10 @@ app.get("/snippets/delete/:id", login.requireUser, function(req, res){
     });
 
 });
+
+/**
+ * POSTS
+**/
 
 app.post("/login", csrfProtection, function(req, res){
     let username = req.body.username.toLowerCase();
