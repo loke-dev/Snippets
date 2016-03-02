@@ -59,16 +59,16 @@ app.get("/", function(req, res) {
     res.render("home/index");
 });
 
-app.get("/logout", function(req, res){
+app.get("/logout", login.requireUser, function(req, res){
     delete req.session.username;
     res.redirect("/");
 });
 
-app.get("/login", csrfProtection, function(req, res) {
+app.get("/login", csrfProtection, login.noUser, function(req, res) {
     res.render("functions/login", {csrfToken: req.csrfToken()});
 });
 
-app.get("/signup", csrfProtection, function(req, res){
+app.get("/signup", csrfProtection, login.noUser, function(req, res){
     res.render("functions/signup", {csrfToken: req.csrfToken()});
 });
 
@@ -111,7 +111,7 @@ app.get("/snippets/delete/:id", login.requireUser, function(req, res){
  * POSTS
 **/
 
-app.post("/login", csrfProtection, function(req, res){
+app.post("/login", login.noUser, csrfProtection, function(req, res){
     let username = req.body.username.toLowerCase();
     let password = req.body.password;
 
@@ -127,7 +127,7 @@ app.post("/login", csrfProtection, function(req, res){
   });
 });
 
-app.post("/signup", csrfProtection, function(req, res){
+app.post("/signup", login.noUser, csrfProtection, function(req, res){
     let username        = req.body.username.toLowerCase();
     let password        = req.body.password;
     let passwordConfirm = req.body.passwordConfirm;
@@ -143,7 +143,7 @@ app.post("/signup", csrfProtection, function(req, res){
     });
 });
 
-app.post("/snippets/save", csrfProtection, function(req, res){
+app.post("/snippets/save", login.requireUser, csrfProtection, function(req, res){
     let data  = req.body.data;
     let title = req.body.title;
 
@@ -158,7 +158,7 @@ app.post("/snippets/save", csrfProtection, function(req, res){
     });
 });
 
-app.post("/snippets/edit/:id", csrfProtection, function(req, res){
+app.post("/snippets/edit/:id", login.requireUser, csrfProtection, function(req, res){
     let data  = req.body.data;
     let title = req.body.title;
     let id    = req.params.id;
