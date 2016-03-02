@@ -12,7 +12,7 @@ let createUser = function(username, password, passwordConfirm, callback){
     let userObject = {username: username, password: password};
     bcrypt.genSalt(10, function(err, salt) {
         if (err) {
-            console.log(err);
+            callback(err);
         } else {
               usersDb.findOne(findUser, function(err, user){
                 if (user) {

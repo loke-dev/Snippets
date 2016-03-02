@@ -117,6 +117,7 @@ app.post("/login", login.noUser, csrfProtection, function(req, res){
 
   login.checkUser(username, password, function(err, user){
     if (user) {
+        console.log(user);
         console.log("You logged in with the username: " + user.username);
         req.session.username = user.username;
         req.session.flash = ("Welcome " + user.username);

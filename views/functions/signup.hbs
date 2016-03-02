@@ -1,7 +1,7 @@
 <form action="/signup" method="post">
-Username: <input type="text" name="username" required><br>
-Password: <input type="password" name="password" required><br>
-Password (again): <input type="password" name="passwordConfirm" required><br>
+Username: <input type="text" name="username" required minlength="3" maxlength="20"><br>
+Password: <input type="password" name="password" required minlength="5"><br>
+Password (again): <input type="password" name="passwordConfirm" required minlength="5"><br>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 <button type="submit">Sign up</button>
 </form>

@@ -7,7 +7,9 @@ let checkUser = function(username, password, callback){
     usersDb.findOne({username: username}, function(err, user){
         if (user) {
             bcrypt.compare(password, user.password, function(err, res) {
-                callback(err, res);
+                if (res) {
+                    callback(err, user);
+                }
             });
         } else {
             callback(err);
