@@ -33,7 +33,7 @@ let checkLogin = function(req, res, next){
 
 let requireUser = function(req, res, next){
     if (!req.user) {
-        res.status(403).render("error/403");
+        res.status(401).render("error/401");
     } else {
         next();
     }

@@ -18,6 +18,10 @@ const app          = express();
 //Start the server
 mongoose();
 
+/**
+ * USE and configs
+**/
+
 app.engine("hbs", exphbs({
     defaultLayout: "default",
     extname: "hbs"
