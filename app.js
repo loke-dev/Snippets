@@ -5,8 +5,8 @@ const exphbs       = require("express-handlebars");
 const session      = require("express-session");
 const bodyParser   = require("body-parser");
 const path         = require("path");
-const csrf         = require("csurf")
-const cookieParser = require("cookie-parser")
+const csrf         = require("csurf");
+const cookieParser = require("cookie-parser");
 const mongoose     = require("./config/mongoose.js");
 const signup       = require("./js/signup.js");
 const snippetDb    = require("./models/snippets");
@@ -43,7 +43,7 @@ app.use("/admin", admin());
 
 let csrfProtection = csrf({ cookie: true });
 
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(login.checkLogin);
 app.use(function(req, res, next) {
     res.locals.flash = req.session.flash;
@@ -95,7 +95,7 @@ app.get("/snippets/edit/:id", csrfProtection, login.requireUser, function(req, r
 
 app.get("/snippets/delete/:id", login.requireUser, function(req, res){
     let id = req.params.id;
-    snippet.del(id, function(err, doc){
+    snippet.del(id, function(err){
         if (err) {
             req.session.flash = (err);
             res.redirect("/snippets");

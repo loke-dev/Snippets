@@ -10,21 +10,27 @@ let createUser = function(username, password, passwordConfirm, callback){
   } else {
     let findUser   = {username:username};
     let userObject = {username: username, password: password};
-    usersDb.findOne(findUser, function(err, user){
-      if (user) {
-        err = "The username you entered already exists in the database!";
-        callback(err);
-      } else {
-        bcrypt.hash(password, null, null, function(err, hash) {
-            let userDb = new usersDb({
-                username: username,
-                password: hash
+    bcrypt.genSalt(10, function(err, salt) {
+        if (err) {
+            console.log(err);
+        } else {
+              usersDb.findOne(findUser, function(err, user){
+                if (user) {
+                    err = "The username you entered is already in use!";
+                    callback(err);
+                } else {
+                bcrypt.hash(password, salt, null, function(err, hash) {
+                    let userDb = new usersDb({
+                        username: username,
+                        password: hash
+                    });
+                    userDb.save(userObject, function(err, user){
+                        callback(err, user);
+                    });
+                });
+              }
             });
-            userDb.save(userObject, function(err, user){
-              callback(err, user);
-            });
-        });
-      }
+        }
     });
   }
 };
