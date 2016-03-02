@@ -39,10 +39,19 @@ let requireUser = function(req, res, next){
     }
 };
 
+let noUser = function(req, res, next){
+    if (req.user) {
+        res.status(403).render("error/403");
+    } else {
+        next();
+    }
+};
+
 
 
 module.exports = {
     checkUser: checkUser,
     checkLogin: checkLogin,
-    requireUser: requireUser
+    requireUser: requireUser,
+    noUser: noUser
 };
