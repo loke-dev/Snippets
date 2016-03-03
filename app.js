@@ -35,7 +35,12 @@ app.use(session({
     name:   "MySweetLittleCookie",
     secret: "F303B3CD83F576E56A187D3F174BAED9",
     saveUninitialized: false,
-    resave: false
+    resave: false,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+        maxAge: 86400
+    }
 }));
 
 let csrfProtection = csrf({ cookie: true });
@@ -194,6 +199,6 @@ app.get("*", function(req, res){
     res.status(404).render("error/404");
 });
 
-app.listen(4580, function() {
+app.listen(8000, function() {
     console.log("Example app listening on port 4580!");
 });
