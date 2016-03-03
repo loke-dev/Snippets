@@ -12,7 +12,6 @@ const signup       = require("./js/signup.js");
 const snippetDb    = require("./models/snippets");
 const snippet      = require("./js/snippet.js");
 const login        = require("./js/login.js");
-const admin        = require("sriracha-admin");
 const app          = express();
 
 //Start the server
@@ -38,8 +37,6 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }));
-
-app.use("/admin", admin());
 
 let csrfProtection = csrf({ cookie: true });
 
