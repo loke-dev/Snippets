@@ -12,7 +12,10 @@ const signup       = require("./js/signup.js");
 const snippetDb    = require("./models/snippets");
 const snippet      = require("./js/snippet.js");
 const login        = require("./js/login.js");
+const http         = require("http");
+const emitter      = require("./js/emitter.js");
 const app          = express();
+
 
 //Start the server
 mongoose();
@@ -119,10 +122,10 @@ app.post("/login", login.noUser, csrfProtection, function(req, res){
 
   login.checkUser(username, password, function(err, user){
     if (user) {
-        console.log(user);
         console.log("You logged in with the username: " + user.username);
         req.session.username = user.username;
         req.session.flash = ("Welcome " + user.username);
+        io.socket.emit("message", {message:"logged in yeeey"});
         res.redirect("/");
     } else {
         res.render("functions/login", {flash: "The login information you entered is not correct!"});
@@ -177,6 +180,32 @@ app.post("/snippets/edit/:id", login.requireUser, csrfProtection, function(req, 
     });
 });
 
+/**
+ * SOCKET
+**/
+
+
+let server = http.createServer(app).listen(8000, function() {
+    console.log("Listening on port 8000!");
+});
+
+let io = require("socket.io")(server);
+
+
+
+io.on("connection", function(socket){
+    socket.on("message", function(message){
+        console.log(message + " has logged in");
+    });
+});
+
+io.on("disconnect",function(socket){
+    console.log("A user has disconnected");
+});
+
+
+
+
 
 
 /**
@@ -199,6 +228,3 @@ app.get("*", function(req, res){
     res.status(404).render("error/404");
 });
 
-app.listen(4580, function() {
-    console.log("Example app listening on port 4580!");
-});
