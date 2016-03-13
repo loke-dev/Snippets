@@ -17,6 +17,12 @@ const app          = express();
 //Start the server
 mongoose();
 
+
+
+//hej
+
+
+
 /**
  * USE and configs
 **/
