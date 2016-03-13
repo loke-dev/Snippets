@@ -17,12 +17,6 @@ const app          = express();
 //Start the server
 mongoose();
 
-
-
-//hehehehj
-
-
-
 /**
  * USE and configs
 **/
@@ -205,6 +199,6 @@ app.get("*", function(req, res){
     res.status(404).render("error/404");
 });
 
-app.listen(8000, function() {
+app.listen(4580, function() {
     console.log("Example app listening on port 4580!");
 });
