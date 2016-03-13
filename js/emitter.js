@@ -1,3 +1,5 @@
+"use strict";
+
 let EventEmitter = require("events").EventEmitter;
 let emitter = new EventEmitter();
 

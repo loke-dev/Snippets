@@ -69,6 +69,10 @@ app.get("/logout", login.requireUser, function(req, res){
     res.redirect("/");
 });
 
+app.get("/dashboard", csrfProtection, login.requireUser, function(req, res) {
+    res.render("functions/dashboard", {csrfToken: req.csrfToken()});
+});
+
 app.get("/login", csrfProtection, login.noUser, function(req, res) {
     res.render("functions/login", {csrfToken: req.csrfToken()});
 });
@@ -125,9 +129,10 @@ app.post("/login", login.noUser, csrfProtection, function(req, res){
         console.log("You logged in with the username: " + user.username);
         req.session.username = user.username;
         req.session.flash = ("Welcome " + user.username);
-        io.socket.emit("message", {message:"logged in yeeey"});
+        emitter.emit("login", {message:"logged in, yeeey"});
         res.redirect("/");
     } else {
+        emitter.emit("loginFailed", {message:"Bad login, buuuu"});
         res.render("functions/login", {flash: "The login information you entered is not correct!"});
     }
   });
@@ -191,20 +196,19 @@ let server = http.createServer(app).listen(8000, function() {
 
 let io = require("socket.io")(server);
 
-
-
-io.on("connection", function(socket){
-    socket.on("message", function(message){
-        console.log(message + " has logged in");
-    });
-});
-
-io.on("disconnect",function(socket){
-    console.log("A user has disconnected");
-});
+let socket = require("./js/socket.js")(io);
 
 
 
+
+
+//io.on("connection", function(socket){
+//
+//});
+
+//io.on("disconnect",function(socket){
+//    console.log("A user has disconnected");
+//});
 
 
 
