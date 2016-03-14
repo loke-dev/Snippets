@@ -24,3 +24,8 @@ socket.on("loginFailed", function(data) {
 socket.on("signup", function(data) {
     print(data.username + data.message);
 });
+
+//Delete a snippet
+socket.on("delete", function(data) {
+    print(data.username + data.message);
+});

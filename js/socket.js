@@ -14,4 +14,8 @@ module.exports = function(io) {
     emitter.on("signup", function(payload){
         io.emit("signup", {message:payload.message, username:payload.username});
     });
+
+    emitter.on("delete", function(payload){
+        io.emit("delete", {message:payload.message, username:payload.username});
+    });
 };

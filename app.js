@@ -112,6 +112,7 @@ app.get("/snippets/delete/:id", login.requireUser, function(req, res){
             res.redirect("/snippets");
         } else {
             req.session.flash = ("Snippet sucessfully deleted from the database!");
+            emitter.emit("delete", {message:" deleted a snippet!", username: req.session.username});
             res.redirect("/snippets");
         }
     });
