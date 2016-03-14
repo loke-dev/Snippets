@@ -56,6 +56,8 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(express.static(__dirname + "/public"));
+
 /**
  * GETS
 **/
@@ -69,7 +71,7 @@ app.get("/logout", login.requireUser, function(req, res){
     res.redirect("/");
 });
 
-app.get("/dashboard", csrfProtection, login.requireUser, function(req, res) {
+app.get("/dashboard", csrfProtection, function(req, res) {
     res.render("functions/dashboard", {csrfToken: req.csrfToken()});
 });
 
@@ -129,11 +131,12 @@ app.post("/login", login.noUser, csrfProtection, function(req, res){
         console.log("You logged in with the username: " + user.username);
         req.session.username = user.username;
         req.session.flash = ("Welcome " + user.username);
-        emitter.emit("login", {message:"logged in, yeeey"});
+        emitter.emit("loginSucess", {message:" logged in sucessfully!", username: user.username});
         res.redirect("/");
     } else {
-        emitter.emit("loginFailed", {message:"Bad login, buuuu"});
-        res.render("functions/login", {flash: "The login information you entered is not correct!"});
+        emitter.emit("loginFailed", {message:" tried log in but failed.", username: username});
+        req.session.flash = "The login information you entered is not correct!";
+        res.redirect("/login");
     }
   });
 });
@@ -149,6 +152,7 @@ app.post("/signup", login.noUser, csrfProtection, function(req, res){
         } else {
             console.log("You registered with the username: " + user.username + "!");
             req.session.flash = ("You have successfully created the account: " + user.username + ", you can now log in!");
+            emitter.emit("signup", {message:" has created a new account!", username:user.username});
             res.redirect("/");
         }
     });
@@ -189,7 +193,6 @@ app.post("/snippets/edit/:id", login.requireUser, csrfProtection, function(req, 
  * SOCKET
 **/
 
-
 let server = http.createServer(app).listen(8000, function() {
     console.log("Listening on port 8000!");
 });
@@ -197,8 +200,6 @@ let server = http.createServer(app).listen(8000, function() {
 let io = require("socket.io")(server);
 
 let socket = require("./js/socket.js")(io);
-
-
 
 
 
@@ -231,4 +232,3 @@ app.use(function(error, req, res, next) {
 app.get("*", function(req, res){
     res.status(404).render("error/404");
 });
-

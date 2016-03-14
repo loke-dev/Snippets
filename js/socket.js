@@ -3,13 +3,15 @@
 let emitter = require("../js/emitter.js");
 
 module.exports = function(io) {
-    emitter.on("login", function(payload){
-        io.emit("login", {message:payload});
-        console.log(payload.message);
+    emitter.on("loginSucess", function(payload){
+        io.emit("loginSucess", {message:payload.message, username:payload.username});
     });
 
     emitter.on("loginFailed", function(payload){
-        io.emit("login", {message:payload});
-        console.log(payload.message);
+        io.emit("loginFailed", {message:payload.message, username:payload.username});
     });
-}
+
+    emitter.on("signup", function(payload){
+        io.emit("signup", {message:payload.message, username:payload.username});
+    });
+};
