@@ -2,30 +2,53 @@
 
 let socket = io();
 
-function print(data) {
-    var text = document.createTextNode(data),
-        el = document.createElement("li"),
-        messages = document.querySelector(".listArea");
+function printText(data) {
+    let text = document.createTextNode(data);
+    let el = document.createElement("li");
+    let messages = document.querySelector(".listArea");
     el.appendChild(text);
+    messages.appendChild(el);
+}
+
+function printATag(data, id) {
+    let text = document.createTextNode(data);
+    let el = document.createElement("li");
+    let aTag = document.createElement("a");
+    let messages = document.querySelector(".listArea");
+    let titleText = document.createTextNode("here");
+    aTag.setAttribute("href", "/snippets/view/" + id);
+    aTag.appendChild(titleText);
+    el.appendChild(text);
+    el.appendChild(aTag);
     messages.appendChild(el);
 }
 
 //Login Sucessfully
 socket.on("loginSucess", function(data) {
-    print(data.username + data.message);
+    printText(data.username + data.message);
 });
 
 //Login Failed
 socket.on("loginFailed", function(data) {
-    print(data.username + data.message);
+    printText(data.username + data.message);
 });
 
 //Signup with new account
 socket.on("signup", function(data) {
-    print(data.username + data.message);
+    printText(data.username + data.message);
 });
 
 //Delete a snippet
 socket.on("delete", function(data) {
-    print(data.username + data.message);
+    printText(data.username + data.message);
+});
+
+//Logout
+socket.on("logout", function(data) {
+    printText(data.username + data.message);
+});
+
+//View snippet
+socket.on("viewSnippet", function(data) {
+    printATag(data.username + data.message, data.id);
 });

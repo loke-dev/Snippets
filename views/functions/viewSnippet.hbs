@@ -1,0 +1,8 @@
+<form method="post">
+Title:<input type="text" name="title" class="titleArea" value="{{this.title}}" readonly><br>
+Data:<input type="text" name="data" class="textArea" value="{{this.data}}" readonly><br>
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/showEdit.js"></script>

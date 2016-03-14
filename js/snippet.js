@@ -2,6 +2,7 @@
 
 const snippetDb  = require("../models/snippets");
 
+
 let save = function(data, title, callback) {
     let snippet = new snippetDb({
         data: data,
@@ -36,6 +37,20 @@ let edit = function(id, callback) {
     });
 };
 
+let view = function(id, callback) {
+    snippetDb.findById(id, function(err, doc) {
+        let id    = doc.id;
+        let title = doc.title;
+        let data  = doc.data;
+
+        if (err) {
+           callback(err, null, null, null);
+       } else {
+           callback(err, id, title, data);
+       }
+    });
+};
+
 let update = function(id, title, data, callback) {
     let obj = {
         data: data,
@@ -52,9 +67,14 @@ let update = function(id, title, data, callback) {
 
 
 
+
+
+
+
 module.exports = {
     save: save,
     del: del,
     edit: edit,
+    view: view,
     update: update
 };

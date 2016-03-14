@@ -1,8 +1,9 @@
 <form action="/snippets/edit/{{this.id}}" method="post">
-Title:<input type="text" name="title" value="{{this.title}}"><br>
-Data:<input type="text" name="data" value="{{this.data}}"><br>
+Title:<input type="text" name="title"  class="titleArea" value="{{this.title}}"><br>
+Data:<input type="text" name="data" class="textArea" value="{{this.data}}"><br>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 <button type="submit">Save</button>
 </form>
 
-
+<script src="/socket.io/socket.io.js"></script>
+<script src="/edit.js"></script>

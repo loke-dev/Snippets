@@ -67,6 +67,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/logout", login.requireUser, function(req, res){
+    emitter.emit("logout", {message:" logged out!", username: req.session.username});
     delete req.session.username;
     res.redirect("/");
 });
@@ -99,7 +100,19 @@ app.get("/snippets/edit/:id", csrfProtection, login.requireUser, function(req, r
         if (err) {
             console.log(err);
         } else {
+            emitter.emit("viewSnippet", {message:" is editing a snippet! View it ", username: req.session.username, id:id});
             res.render("functions/editSnippet", {id: id, title: title, data: data, csrfToken: req.csrfToken()});
+        }
+    });
+});
+
+app.get("/snippets/view/:id", csrfProtection, function(req, res){
+    let id = req.params.id;
+    snippet.view(id, function(err, id, title, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("functions/viewSnippet", {id: id, title: title, data: data, csrfToken: req.csrfToken()});
         }
     });
 });
@@ -202,11 +215,6 @@ let io = require("socket.io")(server);
 
 let socket = require("./js/socket.js")(io);
 
-
-
-//io.on("connection", function(socket){
-//
-//});
 
 //io.on("disconnect",function(socket){
 //    console.log("A user has disconnected");
