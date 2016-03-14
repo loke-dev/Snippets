@@ -3,7 +3,7 @@
 <ul>
 {{#each snippets}}
   <li>
-  <b>{{this.title}}</b>
+  <b><a class="link" href="/snippets/view/{{this._id}}">{{this.title}}</a></b>
   <p>{{this.data}}</p>
   <a href="/snippets/edit/{{this._id}}">Edit</a>
   <a href="/snippets/delete/{{this._id}}">Delete</a>
@@ -15,7 +15,7 @@
 <ul>
 {{#each snippets}}
   <li>
-  <b>{{this.title}}</b>
+  <b><a class="link" href="/snippets/view/{{this._id}}">{{this.title}}</a></b>
   <p>{{this.data}}</p>
   </li><br>
 {{/each}}
