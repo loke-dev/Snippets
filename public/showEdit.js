@@ -14,12 +14,10 @@ function showEditText(data) {
 
 //Show live edit title
 socket.on("titleArea", function(data) {
-    console.log(data);
     showEditTitle(data.message);
 });
 
 //Show live edit text
 socket.on("textArea", function(data) {
-    console.log(data);
     showEditText(data.message);
 });

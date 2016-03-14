@@ -52,3 +52,13 @@ socket.on("logout", function(data) {
 socket.on("viewSnippet", function(data) {
     printATag(data.username + data.message, data.id);
 });
+
+//Save snippet
+socket.on("saveSnippet", function(data) {
+    printATag(data.username + data.message, data.id);
+});
+
+//New snippet
+socket.on("newSnippet", function(data) {
+    printATag(data.username + data.message, data.id);
+});

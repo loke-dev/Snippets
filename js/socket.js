@@ -27,6 +27,14 @@ module.exports = function(io) {
         io.emit("viewSnippet", {message:payload.message, username:payload.username, id:payload.id});
     });
 
+    emitter.on("saveSnippet", function(payload){
+        io.emit("saveSnippet", {message:payload.message, username:payload.username, id:payload.id});
+    });
+
+    emitter.on("newSnippet", function(payload){
+        io.emit("newSnippet", {message:payload.message, username:payload.username, id:payload.id});
+    });
+
     io.on("connection", function(socket){
         socket.on("titleArea", function(data){
             io.emit("titleArea", {

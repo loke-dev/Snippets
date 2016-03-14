@@ -8,8 +8,12 @@ let save = function(data, title, callback) {
         data: data,
         title: title
     });
-    snippet.save(data, function(err) {
-        callback(err);
+    snippet.save(data, function(err, payload) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, payload);
+        }
     });
 };
 
@@ -60,7 +64,7 @@ let update = function(id, title, data, callback) {
         if (err) {
            callback(err, null);
        } else {
-           callback(err, snippet);
+           callback(null, snippet);
        }
     });
 };
