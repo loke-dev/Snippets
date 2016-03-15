@@ -1,10 +1,14 @@
 {{#if user}}
 Logged in as: <b>{{user.username}}</b>.
 <a href="/logout">Logout</a>
+<br>
+<div class="navBox">
+<a href="/">Home</a> | <a href="/snippets">Snippets</a>
+</div>
 {{else}}
 <a href="/login">Login</a> | <a href="/signup">Sign up</a>
-{{/if}}
 <br>
 <div class="navBox">
 <a href="/">Home</a> | <a href="/snippets">Snippets</a> | <a href="/dashboard">Dashboard</a>
 </div>
+{{/if}}
