@@ -89,7 +89,7 @@ router.post("/snippets/edit/:id", login.requireUser, csrfProtection, function(re
         } else {
             console.log("Your snippet was successfully updated!");
             req.session.flash = ("Your snippet was successfully updated!");
-            emitter.emit("saveSnippet", {message:" has saved a edited snippet! View it ", username: req.session.username, id: id});
+            emitter.emit("saveSnippet", {message:" has saved a snippet! View it ", username: req.session.username, id: id});
             res.redirect("/snippets");
         }
     });

@@ -18,13 +18,13 @@ header {
     background-color: #BACDB0;
     text-align: center;
     font-size: 36px;
-    height: 200px;
     padding-bottom: 10px;
 }
 
 nav {
     background-color: #729B79;
     text-align: center;
+    font-size: 18px;
 }
 
 a {
@@ -65,7 +65,9 @@ a:hover {
     color: #BACDB0;
 }
 
-
+.navBox {
+    font-size: 25px;
+}
 
 .titleArea {
 
@@ -136,6 +138,7 @@ a:hover {
   cursor: pointer;
   height: 30px;
   width: 50px;
+  margin-top: 5px;
 }
 
 .btn:hover {
