@@ -19,7 +19,7 @@ router.get("/logout", login.requireUser, function(req, res){
     res.redirect("/");
 });
 
-router.get("/dashboard", csrfProtection, function(req, res) {
+router.get("/dashboard", login.requireUser, csrfProtection, function(req, res) {
     res.render("functions/dashboard", {csrfToken: req.csrfToken()});
 });
 
