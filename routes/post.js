@@ -15,7 +15,7 @@ router.post("/login", login.noUser, csrfProtection, function(req, res){
     let password = req.body.password;
 
   login.checkUser(username, password, function(err, user){
-    if (user) {
+    if (!err) {
         console.log("You logged in with the username: " + user.username);
         req.session.username = user.username;
         req.session.flash = ("Welcome " + user.username);
