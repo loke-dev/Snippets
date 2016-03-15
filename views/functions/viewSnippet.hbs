@@ -1,8 +1,9 @@
-<form>
+<div class="snippet">
+<form class="snippetForm">
 <input type="text" name="title" class="titleArea" value="{{this.title}}" readonly><br>
-<input type="text" name="data" class="textArea" value="{{this.data}}" readonly><br>
+<textarea cols="40" rows="5" name="data" class="textArea" readonly>{{this.data}}</textarea><br>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 </form>
-
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/showEdit.js"></script>

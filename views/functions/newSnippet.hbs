@@ -1,6 +1,8 @@
-<form action="/snippets/new" method="post">
-<input type="text" name="title" required><br>
-<input type="text" name="data" required><br>
+<div class="snippet">
+<form action="/snippets/new" method="post" class="snippetForm">
+<input type="text" name="title"  class="titleArea" placeholder="Title" required><br>
+<textarea cols="40" rows="5" name="data" class="textArea" placeholder="Snippet" required></textarea><br>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
-<button type="submit">Save</button>
+<button type="submit" class="btn">Save</button>
 </form>
+</div>

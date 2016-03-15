@@ -1,13 +1,16 @@
+<div class="bodyText">
 {{#if user}}
 <a href="/snippets/new">Create new snippet</a>
 <br><br>
 <ul>
 {{#each snippets}}
   <li>
-  <b><a class="link" href="/snippets/view/{{this._id}}">{{this.title}}</a></b>
-  <p>{{this.data}}</p>
+      <div class="listSnippet">
+  <b><a class="link snippetTitle" href="/snippets/view/{{this._id}}">{{this.title}}</a></b><br>
+  <textarea cols="40" rows="5" name="data" class="snippetText" readonly>{{this.data}}</textarea><br>
   <a href="/snippets/edit/{{this._id}}">Edit</a>
   <a href="/snippets/delete/{{this._id}}">Delete</a>
+  <div>
   </li><br>
 {{/each}}
 </ul>
@@ -16,9 +19,12 @@
 <ul>
 {{#each snippets}}
   <li>
-  <b><a class="link" href="/snippets/view/{{this._id}}">{{this.title}}</a></b>
-  <p>{{this.data}}</p>
+      <div class="listSnippet">
+          <b><a class="link snippetTitle" href="/snippets/view/{{this._id}}">{{this.title}}</a></b><br>
+          <textarea cols="40" rows="5" name="data" class="snippetText" readonly>{{this.data}}</textarea><br>
+    <div>
   </li><br>
 {{/each}}
 </ul>
 {{/if}}
+</div>

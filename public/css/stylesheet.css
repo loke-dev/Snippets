@@ -7,8 +7,10 @@ html {
     background-color: #F3E8EE;
 }
 
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
 body {
-    font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+    font-family: 'Open Sans', sans-serif;
     color:#2E2C2F;
 }
 
@@ -29,6 +31,32 @@ a {
     color: #2E2C2F;
 }
 
+ul {
+    list-style-type: none;
+}
+
+textarea {
+    resize: none;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+}
+
 a:visited {
     color: #2E2C2F;
 }
@@ -37,7 +65,137 @@ a:hover {
     color: #BACDB0;
 }
 
-.navBox {
 
 
+.titleArea {
+
+}
+
+.textArea {
+    width: 100%;
+    height: 500px;
+}
+
+.bodyText {
+    margin: 25px;
+}
+
+.snippet {
+  margin: auto;
+  font-size: 16px;
+}
+
+/* Reset top and bottom margins from certain elements */
+.snippet p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.snippetForm {
+  background: #BACDB0;
+  padding: 12px;
+  width: 40%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Every row inside .login-container is defined with p tags */
+.snippet p {
+  padding: 12px;
+}
+
+.snippet input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+}
+
+.snippet input[type="titleArea"],
+.snippet input[type="textArea"] {
+  background: #F3E8EE;
+  border-color: #2E2C2F;
+  color: #555;
+}
+
+/* Text fields' focus effect */
+.snippet input[type="titleArea"]:focus,
+.snippet input[type="textArea"]:focus {
+  border-color: #888;
+}
+
+.btn {
+  background: #729B79;
+  border-color: transparent;
+  color: #000;
+  cursor: pointer;
+  height: 30px;
+  width: 50px;
+}
+
+.btn:hover {
+  background: #475B63;
+}
+
+/* Buttons' focus effect */
+.btn:focus {
+  border-color: #475B63;
+}
+
+
+.listSnippet {
+    background-color: #BACDB0;
+    box-sizing: border-box;
+    display: block;
+    width: 99%;
+    border-color: #729B79;
+    padding: 15px;
+    outline: 0;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+
+.listSnippet a {
+    color: #475B63;
+}
+
+.listSnippet a:hover {
+    color: #729B79;
+}
+
+.login {
+    padding: 30px;
+}
+
+.signup {
+    padding: 30px;
+}
+
+.signup input {
+    padding: 5px;
+    font-size: 20px;
+    width: 20%
+}
+
+.login input {
+    padding: 5px;
+    font-size: 20px;
+    width: 20%
+}
+
+.snippetText {
+    margin-top: 5px;
+    padding: 3px;
+    background-color: #729B79;
+    overflow: hidden;
+    color: #2E2C2F;
+}
+
+.snippetTitle {
+    font-size: 25px;
 }
