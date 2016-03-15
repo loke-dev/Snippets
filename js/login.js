@@ -12,7 +12,7 @@ let checkUser = function(username, password, callback){
                 }
             });
         } else {
-            callback(err);
+            callback(err, null);
         }
     });
 };
