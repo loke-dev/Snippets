@@ -65,6 +65,10 @@ a:hover {
     color: #BACDB0;
 }
 
+.titanic {
+    float: none;
+}
+
 .navBox {
     font-size: 25px;
     padding: 5px;
