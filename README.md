@@ -1,49 +1,64 @@
-# node-mongodb-vagrant
-This is a boilerplate vagrant solution for students taking the course sevrer based web programming at the Linnaeus University, Kalmar, Sweden
+Snippet
+============
+[![Current Version](https://img.shields.io/badge/version-1.1-green.svg)](https://github.com/1dv023/lc222ak-examination-3) 
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://snippet.lokecarlsson.se) 
 
-Following stuff will be installed:
-* node.js, latest stable (OBS not LTS) version
-* npm (along with node.js)
-* mongodb - noSQL database, latest version
-* redis server - fast in memory server, version 3.0.6
+This is Loke Carlsson's snippet web application for Examination 3 in the course 1dv023, server based web programming. It is  powered by Socket.io, Express and MongoDB.
 
-To get this to work, you must have VirtualBox and Vagrant installed. Installers for VirtualBox are available at http://www.virtualbox.org, and installers for
-Vagrant are available at http://www.vagrantup.com.
+![Snippet Preview](http://i.imgur.com/wWhkJVx.png)
 
-Clone this repo to a folder on your local system and give it a name of your own (my_project in this case)
+## Demo
+You can test a fully working live demo at https://snippet.lokecarlsson.se
 
-    git clone https://github.com/1dv023/node-mongodb-vagrant.git my_project
+---
 
-go to that directory and start up the vagrant machine
+## Features
+- Registration of account
+- Create, edit and delete of snippets
+- Dashboard with full notification of user actions
+- Logged in users can live view other users edit snippets in realtime
+- Emphasise on security
 
-    cd my_project
-    vagrant up
+#### Unregistered useres can:
+- View snippets
 
-The Vagrantfile will download and install the hashicorp/precise32 vagrant box if you don't
-already have it.
+#### Registered useres can:
+ - Create snippets
+ - Edit snippets
+ - Delete snippets
+ - Access the dashboard
 
-After a few minutes, you should have a virtual dev environment with node, npm, mongodb and redis.
-The port 8000 on the VM is forwarded to port 8000 on the localhost.
+---
 
-You can test out your environment by ssh'ing into your environment and running the sample script:
+## Setup
+Clone this repo to your machine or server and run the following command to install all the dependencies.
+```bash
+$ npm install
+```
 
-    vagrant ssh
-    node app.js
+### Optional setup
 
-## Important note about Installing NPM Packages
+You can use [this](https://www.digitalocean.com/community/tutorials/how-to-set-up-automatic-deployment-with-git-with-a-vps) tutorial to set up git hooks but for the sake of just running the application there is no need.
 
-There are problems installing npm packages in a vagrant machine running Virtual Box on Windows. This goes for certain packages as "jade" and "express" which are trying to create symlinks during installation
+Install [PM2](https://github.com/Unitech/pm2) to start the node application as a daemon.
 
-This can cause problems when you're attempting to install certain packages via npm. For
-example, the 'jade' and 'express' packages create symlinks during installation.
+Install PM2
+```bash
+$ npm install pm2 -g
+```
+Start the application
+```bash
+$ pm2 start app.js
+```
 
-The best workaround for this is to install node packages in your shared folder with the
---no-bin-links flag, e.g.
+---
 
-    npm install express --no-bin-links
+## License
 
-You can also try to install the package as globals if you need to execture the bin-file
+This project is licensed under the terms of the **ISC** license.
 
-    npm install jade -g
+---
 
-This vagrant images is tested on Mac OSX Yosemite with Virtual Box version 5.0.10 and Vagrant version 1.7.4
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/made-with-crayons.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
