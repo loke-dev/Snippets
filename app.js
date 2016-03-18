@@ -28,7 +28,7 @@ app.set("view engine", "hbs");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
     name:   "MySweetLittleCookie",
     secret: "F303B3CD83F576E56A187D3F174BAED9",
