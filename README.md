@@ -3,7 +3,7 @@ Snippet
 [![Current Version](https://img.shields.io/badge/version-1.1-green.svg)](https://github.com/1dv023/lc222ak-examination-3) 
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://snippet.lokecarlsson.se) 
 
-This is Loke Carlsson's snippet web application for Examination 3 in the course 1dv023, server based web programming. It is  powered by Socket.io, Express and MongoDB.
+This is Loke Carlsson's snippet web application. It is  powered by Socket.io, Express and MongoDB.
 
 ![Snippet Preview](http://i.imgur.com/wWhkJVx.png)
 
